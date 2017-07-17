@@ -1,0 +1,9 @@
+<div class="static-header">
+    <div>
+        <img src="icons/favourites.png" alt="">&nbsp;<span class="title">My favourites</span>
+    </div>
+</div>
+<div class="favourite-list" ng-repeat="comic in comics">
+    <img ng-src="comic.resourceURI" alt="Comic Image" class="comic-image" />
+    <span class="round btn"></span>
+</div>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Comics List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" />
+    <!-- Angular Definitions -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+
+    <script src="http://unpkg.com/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-md5/0.1.10/angular-md5.js"></script>
+
+    <script src="app/app.js"></script>
+
+    <!-- App Services -->
+    <script src="app/services/marvelServices.js"></script>
+
+    <script src="app/controllers/mainCtrl.js"></script>
+    <script src="app/controllers/charactersCtrl.js"></script>
+
+    <!--App Directives -->
+    <script src="app/directives/characters/charactersDir.js"></script>
+    <script src="app/directives/favourites/favouritesDir.js"></script>
+
+</head>
+
+<body ng-app="marvelComics" ng-cloak>
+    <div ui-view class="wrapper">
+
+    </div>
+</body>
+
+</html>

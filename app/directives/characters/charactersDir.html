@@ -1,0 +1,39 @@
+<div class="static-header">
+    <div>
+        <img src="icons/characters.png" alt="characters" /><span>Characters</span>
+    </div>
+    <div class="clear-area"></div>
+    <div>
+        <select class="select" id="sort" ng-init="sortSelected= sortBy[0];" ng-model="sortSelected" ng-options="element.name for element in sortBy">
+        </select>
+        <span class="indicator" ng-click="showOptions();"></span>
+    </div>
+</div>
+<div class="card-container" ng-cloak>
+    <div class="card" ng-repeat="character in characterList | orderBy : getCriteria() | limitTo : itemsPerPage">
+        <div class="card-head">
+            <img ng-src="{{character.thumbnail.path}}" class="thumbnail" />
+            <h3 class="title">Related Comics</h3>
+            <div class="card-footer">
+                <a class="link" ng-click="aboutComic(comic.resourceURI)" ng-repeat="comic in character.comics.items | limitTo : 2">{{comic.name}}</a>
+                <span ng-if="character.comics.available===0">The character has no related comics</span>
+            </div>
+        </div>
+        <div class="card-head">
+            <div class="first">
+                <div class="title">{{character.name}}</div>
+                <br/>
+                <span class="description">{{!!character.description?character.description:'No Content Available'}}</span>
+                <br/>
+                <button type="button">View More</button>
+            </div>
+            <div class="card-footer">
+                <a class="link" ng-click="aboutComic(comic.resourceURI)" ng-repeat="comic in character.comics.items | startFrom : 2 | limitTo : 2">{{comic.name}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="paginator" ng-if="!!total">
+        <span class="page-item left-btn" ng-click="previousPage()"></span><span class="page-item {{page===actualPage?'page-item-selected':''}}" ng-repeat="page in generateList() | limitTo: 5">{{page}}</span><span class="page-item">...</span><span class="page-item right-btn "
+            ng-click=" nextPage();"></span>
+    </div>
+</div>
