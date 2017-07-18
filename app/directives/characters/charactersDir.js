@@ -8,9 +8,10 @@
                 scope: {
                     characterList: '=',
                     itemsPerPage: "=",
-                    total: "="
+                    total: "=",
+                    search: "="
                 },
-                controller: function($scope, $rootScope) {
+                controller: function($scope, $rootScope, $filter, marvelServices, storageServices) {
 
                     $scope.getCriteria = function() {
                         if ($scope.sortSelected.code === '002') {
@@ -21,7 +22,7 @@
                     }
 
                     $scope.getOptions = function() {
-                        angular.element(document.querySelector('#sort')).click();
+                        document.getElementById('sort').click();
                     }
 
                     $scope.$watch("total", function(newVal) {
@@ -36,6 +37,8 @@
 
                     $scope.actualPage = 1;
 
+                    $scope.showContent = false;
+
                     $scope.generateList = function() {
                         var list = [];
                         for (var i = 1; i <= $scope.pagesLength; i++) {
@@ -44,8 +47,19 @@
                         return list;
                     }
 
-                    $scope.aboutComic = function(url) {
-                        alert(url)
+                    $scope.aboutComic = function(comic) {
+                        $scope.showContent = true;
+                        $rootScope.$emit("moreInfo:show");
+                        marvelServices.getComic(comic.resourceURI)
+                            .then(function(response) {
+                                $scope.selectedComic = response.data.results[0];
+                                $scope.selectedComic.thumbnail.path += marvelServices.generateQuery(false, 'portrait');
+                            });
+                    }
+
+                    $scope.closeInfo = function() {
+                        $scope.showContent = false;
+                        $rootScope.$emit("moreInfo:hide");
                     }
 
                     $scope.nextPage = function() {
@@ -58,6 +72,35 @@
                         if ($scope.actualPage > 1) {
                             $scope.actualPage -= 1;
                             $rootScope.$emit("paginator:previousPage");
+                        }
+                    }
+
+                    $scope.isFavourite = function(comic) {
+                        if (!!comic) {
+                            if (!!storageServices.getItem(comic.id)) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                        return false;
+                    }
+
+                    $scope.getPrices = function(prices) {
+                        if (!!prices) {
+                            return prices[0].price;
+                        } else {
+                            return '9.99';
+                        }
+                    }
+
+                    $scope.addToFavourites = function(comic) {
+                        if (!storageServices.getItem(comic.id)) {
+                            storageServices.setItem(comic.id, comic);
+                            $scope.closeInfo();
+                        } else {
+                            storageServices.removeItem(comic.id);
+                            $scope.closeInfo();
                         }
                     }
 
@@ -74,6 +117,21 @@
                         code: "002",
                         name: "Downward"
                     }]
+                }
+            }
+        })
+        .filter('searchFilter', function() {
+            return function(actual, spected) {
+                if (!!spected && !!actual) {
+                    var selected = [];
+                    for (var i = 0; i < actual.length; i++) {
+                        if (!!actual[i].name && actual[i].name.toLowerCase().indexOf(spected.toLowerCase()) > -1) {
+                            selected.push(actual[i]);
+                        }
+                    }
+                    return selected;
+                } else {
+                    return actual;
                 }
             }
         })

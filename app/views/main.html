@@ -3,8 +3,8 @@
     <span class="clear-area"></span>
     <div class="container">
         <div class="input-addon">
-            <input class="input" type="text" placeholder="Search character..." ng-model="searchBox" />
-            <span class="input-addon-button" ng-click="search()"></span>
+            <input class="input" type="text" placeholder="Search character..." ng-model="search" ng-keyup="goSearch()" />
+            <span class="input-addon-button"></span>
         </div>
     </div>
     <span class="clear-area"></span>

@@ -1,9 +1,9 @@
 <div class="section-content">
     <section class="main-section">
-        <characters character-list="characterList" items-per-page="limit" total="total"></characters>
+        <characters character-list="characterList" items-per-page="limit" total="total" search="search"></characters>
 
     </section>
-    <section class="second-section">
-        <favourites comics=""></favourites>
+    <section class="{{showContent?'blurred second-section':'second-section'}}">
+        <favourites comics="comics"></favourites>
     </section>
 </div>

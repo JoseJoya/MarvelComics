@@ -1,4 +1,4 @@
-<div class="static-header">
+<div class="{{showContent?'blurred static-header':'static-header'}}">
     <div>
         <img src="icons/characters.png" alt="characters" /><span>Characters</span>
     </div>
@@ -6,16 +6,16 @@
     <div>
         <select class="select" id="sort" ng-init="sortSelected= sortBy[0];" ng-model="sortSelected" ng-options="element.name for element in sortBy">
         </select>
-        <span class="indicator" ng-click="showOptions();"></span>
+        <span class="indicator" ng-click="getOptions();"></span>
     </div>
 </div>
-<div class="card-container" ng-cloak>
-    <div class="card" ng-repeat="character in characterList | orderBy : getCriteria() | limitTo : itemsPerPage">
+<div class="{{showContent?'blurred card-container':'card-container'}}" ng-cloak>
+    <div class="card" ng-repeat="character in characterList | orderBy : getCriteria() | limitTo : itemsPerPage | searchFilter : search">
         <div class="card-head">
             <img ng-src="{{character.thumbnail.path}}" class="thumbnail" />
             <h3 class="title">Related Comics</h3>
             <div class="card-footer">
-                <a class="link" ng-click="aboutComic(comic.resourceURI)" ng-repeat="comic in character.comics.items | limitTo : 2">{{comic.name}}</a>
+                <a class="link" ng-click="aboutComic(comic)" ng-repeat="comic in character.comics.items | limitTo : 2">{{comic.name}}</a>
                 <span ng-if="character.comics.available===0">The character has no related comics</span>
             </div>
         </div>
@@ -28,12 +28,28 @@
                 <button type="button">View More</button>
             </div>
             <div class="card-footer">
-                <a class="link" ng-click="aboutComic(comic.resourceURI)" ng-repeat="comic in character.comics.items | startFrom : 2 | limitTo : 2">{{comic.name}}</a>
+                <a class="link" ng-click="aboutComic(comic)" ng-repeat="comic in character.comics.items | startFrom : 2 | limitTo : 2">{{comic.name}}</a>
             </div>
         </div>
     </div>
     <div class="paginator" ng-if="!!total">
         <span class="page-item left-btn" ng-click="previousPage()"></span><span class="page-item {{page===actualPage?'page-item-selected':''}}" ng-repeat="page in generateList() | limitTo: 5">{{page}}</span><span class="page-item">...</span><span class="page-item right-btn "
             ng-click=" nextPage();"></span>
+    </div>
+</div>
+<div class="more-info" ng-if="showContent">
+    <div class="more-info-content">
+        <span class="close-btn" ng-click="closeInfo()"></span>
+        <div class="comic-info">
+            <img src="{{selectedComic.thumbnail.path}}" class="comic-img" alt="" />
+            <div>
+                <h3>{{selectedComic.title}}</h3>
+                {{selectedComic.description}}
+            </div>
+        </div>
+        <div class="more-info-buttons">
+            <button ng-click="addToFavourites(selectedComic)" type="button" class="{{isFavourite(selectedComic)?'btn-default active':'btn-default'}}"><img src="icons/btn-favourites-{{isFavourite(selectedComic)?'primary':'default'}}.png" alt=""><span class="addon-text">{{isFavourite(selectedComic)?'ADDED TO FAVOURITES':'ADD TO FAVORITES'}}</span></button>
+            <button type="button" class="btn-second"><img src="icons/shopping-cart-primary.png" alt=""><span class="addon-text">BUY FOR {{getPrices(selectedComic.prices) | currency:"$"}}</span></button>
+        </div>
     </div>
 </div>

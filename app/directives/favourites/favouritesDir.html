@@ -1,9 +1,10 @@
 <div class="static-header">
     <div>
-        <img src="icons/favourites.png" alt="">&nbsp;<span class="title">My favourites</span>
+        <img src="icons/favourites.png" alt="">&nbsp;<span>My favourites</span>
     </div>
 </div>
 <div class="favourite-list" ng-repeat="comic in comics">
-    <img ng-src="comic.resourceURI" alt="Comic Image" class="comic-image" />
-    <span class="round btn"></span>
+    <span class="delete-btn" ng-click="deleteFavourite(comic)"></span>
+    <img src="{{comic.thumbnail.path}}" alt="Comic Image" class="comic-image" />
+    <h3>{{comic.title}}</h3>
 </div>

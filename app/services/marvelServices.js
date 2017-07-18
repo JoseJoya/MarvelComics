@@ -21,23 +21,30 @@
                     return deferred.promise;
                 },
                 getThumbnail: function(url) {
+                    if (url.indexOf('?') > -1) {
+                        return url.split('?')[0] + this.generateQuery(true, 'portrait');
+                    }
+                },
+                generateQuery: function(onlyUrl, type) {
                     ts = String((Math.random() * 10000) + 1).split(".")[0];
                     let requestKey = md5.createHash(ts + pvk + pk);
+                    return (!!onlyUrl ? '' : '/' + type + '_fantastic.jpg') + "?ts=" + ts + "&apikey=" + pk + "&hash=" + requestKey;
+                },
+                getComic: function(comicUrl) {
+                    var url = comicUrl;
+                    if (url.indexOf("?") > -1) {
+                        url = url.split("?")[0];
+                    }
                     let deferred = $q.defer();
                     $http({
-                        method: 'GET',
-                        url: url + "/portrait_xlarge.jpg?ts=" + ts + "&apikey=" + pk + "&hash=" + requestKey
+                        method: "GET",
+                        url: url + this.generateQuery(true)
                     }).then(function(response) {
                         deferred.resolve(response.data);
                     }, function(eResponse) {
                         deferred.reject(eResponse);
-                    });
+                    })
                     return deferred.promise;
-                },
-                generateQuery: function() {
-                    ts = String((Math.random() * 10000) + 1).split(".")[0];
-                    let requestKey = md5.createHash(ts + pvk + pk);
-                    return "/standard_fantastic.jpg?ts=" + ts + "&apikey=" + pk + "&hash=" + requestKey;
                 }
             }
         });
