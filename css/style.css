@@ -6,6 +6,7 @@ body {
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    line-height: 1.5em;
 }
 
 .header {
@@ -121,6 +122,8 @@ body {
     flex-grow: 1;
     background: #F4F4F4;
     padding: 30px;
+    padding-right: 0px;
+    padding-left: 10px;
     max-width: 75%;
     flex-direction: column;
     overflow: scroll;
@@ -148,6 +151,7 @@ characters {
     flex-wrap: nowrap;
     margin: 15px;
     padding: 20px;
+    padding-bottom: 0;
     max-width: 430px;
     min-width: 430px;
 }
@@ -206,12 +210,16 @@ characters {
     color: #473D3E;
     font-weight: bold;
     font-size: 22px;
+    text-align: center;
 }
 
 .description {
+    display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
     color: #89817F;
+    overflow: scroll;
+    max-height: 150px;
 }
 
 .card-footer {
@@ -372,10 +380,9 @@ button {
     font-size: 18px;
 }
 
-.comic-img {
+img.comic-image {
     display: flex;
-    width: 260px;
-    height: 400px;
+    width: 212px;
 }
 
 h3,
@@ -464,5 +471,15 @@ h1 {
 .favourite-list>.delete-btn {
     position: relative;
     top: 15px;
-    right: -80px;
+    right: -105px;
+}
+
+favourites>.static-header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.fixed-title {
+    width: 212px;
+    text-align: center;
 }

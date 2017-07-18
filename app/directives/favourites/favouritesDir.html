@@ -6,5 +6,5 @@
 <div class="favourite-list" ng-repeat="comic in comics">
     <span class="delete-btn" ng-click="deleteFavourite(comic)"></span>
     <img src="{{comic.thumbnail.path}}" alt="Comic Image" class="comic-image" />
-    <h3>{{comic.title}}</h3>
+    <h3 class="fixed-title">{{comic.title}}</h3>
 </div>

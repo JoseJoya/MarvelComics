@@ -22,9 +22,7 @@
         <div class="card-head">
             <div class="first">
                 <div class="title">{{character.name}}</div>
-                <br/>
                 <span class="description">{{!!character.description?character.description:'No Content Available'}}</span>
-                <br/>
                 <button type="button">View More</button>
             </div>
             <div class="card-footer">
@@ -33,8 +31,9 @@
         </div>
     </div>
     <div class="paginator" ng-if="!!total">
-        <span class="page-item left-btn" ng-click="previousPage()"></span><span class="page-item {{page===actualPage?'page-item-selected':''}}" ng-repeat="page in generateList() | limitTo: 5">{{page}}</span><span class="page-item">...</span><span class="page-item right-btn "
-            ng-click=" nextPage();"></span>
+        <span class="page-item left-btn" ng-click="previousPage()"></span><span class="page-item {{page===actualPage?'page-item-selected':''}}" ng-repeat="page in generateList() | startFrom : ((actualPage-3)<0?0:(actualPage-3)) | limitTo: 5">{{page}}</span>
+        <span class="page-item">...</span>
+        <span class="page-item right-btn " ng-click=" nextPage();"></span>
     </div>
 </div>
 <div class="more-info" ng-if="showContent">
