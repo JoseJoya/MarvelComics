@@ -1,0 +1,29 @@
+<div class="static-header">
+    <div>
+        <img src="icons/characters.png" alt="comics" /><span>Comics</span>
+    </div>
+    <div class="clear-area"></div>
+    <div>
+        <select class="select" id="sort" ng-init="sortSelected= sortBy[0];" ng-model="sortSelected" ng-options="element.name for element in sortBy">
+        </select>
+        <span class="indicator" ng-click="getOptions();"></span>
+    </div>
+</div>
+<div class="card-container" ng-cloak>
+    <div class="card" ng-repeat="comic in comicList | orderBy : getCriteria() | limitTo : itemsPerPage | searchFilter : search">
+        <div class="card-head">
+            <img ng-src="{{comic.thumbnail.path}}" class="thumbnail" />
+        </div>
+        <div class="card-head">
+            <div class="first">
+                <div class="title">{{comic.title}}</div>
+                <span class="description">{{!!comic.description?comic.description:'No Content Available'}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="paginator" ng-if="!!total">
+        <span class="page-item left-btn" ng-click="previousPage()"></span><span class="page-item {{page===actualPage?'page-item-selected':''}}" ng-repeat="page in generateList() | startFrom : ((actualPage-3)<0?0:(actualPage-3)) | limitTo: 5">{{page}}</span>
+        <span class="page-item">...</span>
+        <span class="page-item right-btn " ng-click=" nextPage();"></span>
+    </div>
+</div>

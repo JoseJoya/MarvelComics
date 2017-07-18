@@ -11,7 +11,7 @@
                     total: "=",
                     search: "="
                 },
-                controller: function($scope, $rootScope, $filter, marvelServices, storageServices) {
+                controller: function($scope, $rootScope, $filter, marvelServices, storageServices, $state, comServices) {
 
                     $scope.getCriteria = function() {
                         if ($scope.sortSelected.code === '002') {
@@ -19,6 +19,11 @@
                         } else {
                             return "name";
                         }
+                    }
+
+                    $scope.showComics = function(character) {
+                        comServices.setComicList(character.comics.collectionURI);
+                        $state.go('mc.comics');
                     }
 
                     $scope.getOptions = function() {

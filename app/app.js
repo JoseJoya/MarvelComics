@@ -15,6 +15,14 @@
                     templateUrl: "app/views/characters.html",
                     controller: "charactersCtrl"
                 })
+                .state('mc.comics', {
+                    url: "/comics",
+                    templateUrl: "app/views/comics.html",
+                    controller: "comicsCtrl",
+                    params: {
+                        "comicsUrl": null
+                    }
+                })
 
             $urlRouterProvider.otherwise('/mc/characters');
         })
