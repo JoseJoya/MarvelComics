@@ -35,6 +35,7 @@
                     if (url.indexOf("?") > -1) {
                         url = url.split("?")[0];
                     }
+                    url = url.replace("http", "https");
                     let deferred = $q.defer();
                     $http({
                         method: "GET",
